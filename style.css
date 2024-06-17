@@ -1,0 +1,80 @@
+:root {
+	--h: 200px;
+	--w: 112px;
+	--count: 28;
+	--duration: 7s;
+	--tau: 6.283rad;
+	--timing: cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+body {
+	min-height: 100dvh;
+	display: grid;
+	align-content: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.stage {
+	width: calc(var(--h) * 2);
+	height: calc(var(--h) * 2);
+	position: relative;
+}
+
+img {
+	--p: calc((var(--i) / var(--count)));
+	--pn: calc((var(--p) - 0.5) * 2);
+	--a: calc(var(--p) * var(--tau));
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: calc(var(--h) * -0.5);
+	margin-left: calc(var(--w) * -0.5);
+	transform-origin: 50% 50%;
+
+	animation: dance var(--duration) infinite;
+	animation-delay: calc(var(--duration) * (1 - var(--p)) * .1);
+	animation-fill-mode: both;
+}
+
+@keyframes dance {
+	0% {
+		opacity: 0;
+		translate: 0% 100%;
+		rotate: 0rad;
+		animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+	}
+	15% {
+		opacity: 1;
+		translate: calc(0% + ((var(--h) * .5) * var(--pn))) 0%;
+		rotate: 0rad;
+	}
+	35% {
+		opacity: 1;
+		translate: calc(0% + ((var(--h) * .5) * var(--pn))) 0%;
+		rotate: 0rad;
+		animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+	}
+	40% {
+		translate: calc((var(--h)*.7) * cos(var(--a))) calc((var(--h)*.7) * sin(var(--a)));
+		rotate: calc(var(--a) - (var(--tau) * .75));
+		opacity: 1;
+	}
+	60% {
+		translate: calc((var(--h)*.7) * cos(var(--a))) calc((var(--h)*.7) * sin(var(--a)));
+		rotate: calc(var(--a) - (var(--tau) * .75));
+		opacity: 1;
+		animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+	}
+	75% {
+		opacity: 0;
+		translate: 0% 100%;
+		rotate: var(--tau);
+	}
+	100% {
+		opacity: 0;
+		translate: 0% 100%;
+		rotate: 0rad;
+	}
+}
